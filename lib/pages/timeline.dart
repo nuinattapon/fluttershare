@@ -29,12 +29,18 @@ class _TimelineState extends State<Timeline> {
   // }
 
   getUsers() async {
-    final QuerySnapshot snapshot = await usersRef.getDocuments();
+    final QuerySnapshot snapshot = 
+      await usersRef
+              .where("isAdmin", isEqualTo: true)
+              .where("postsCount", isLessThan: 4)
+              .orderBy("postsCount", descending: false)
+              .getDocuments();
     snapshot.documents.forEach((DocumentSnapshot doc) {
         print(doc.data);
         print(doc.documentID);
         print(doc.exists);
-      });
+      }
+    );
   }
 
   getUserById() async {
