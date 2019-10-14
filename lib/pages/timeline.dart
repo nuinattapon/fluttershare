@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershare/widgets/header.dart';
-import 'package:fluttershare/widgets/progress.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
@@ -11,46 +10,6 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  @override
-  void initState() {
-    getUsers();
-    // getUserById();
-    super.initState();
-  }
-
-  // getUsers() {
-  //   usersRef.getDocuments().then((QuerySnapshot snapshot) {
-  //     snapshot.documents.forEach((DocumentSnapshot doc) {
-  //       print(doc.data);
-  //       print(doc.documentID);
-  //       print(doc.exists);
-  //     });
-  //   });
-  // }
-
-  getUsers() async {
-    final QuerySnapshot snapshot = 
-      await usersRef
-              .where("isAdmin", isEqualTo: true)
-              .where("postsCount", isLessThan: 4)
-              .orderBy("postsCount", descending: false)
-              .getDocuments();
-    snapshot.documents.forEach((DocumentSnapshot doc) {
-        print(doc.data);
-        print(doc.documentID);
-        print(doc.exists);
-      }
-    );
-  }
-
-  getUserById() async {
-    final String id = "4x7MeiFKocpcoBzqhs9e";
-    final DocumentSnapshot doc = await usersRef.document(id).get();
-    print(doc.data);
-    print(doc.documentID);
-    print(doc.exists);
-  }
-
   @override
   Widget build(context) {
     return Scaffold(
